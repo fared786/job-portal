@@ -1,0 +1,36 @@
+{% extends 'jobportal/base.html' %}
+{% block content %}
+<h2>Applicants for {{ job.title }}</h2>
+<ul class="list-group mt-3">
+    {% for application in applications %}
+    <li class="list-group-item">
+        <strong>{{ application.applicant.username }}</strong><br>
+        <small><strong>Resume:</strong> <a href="{{ application.resume.url }}" target="_blank">Download</a></small><br>
+        <small><strong>Cover Letter:</strong> {{ application.cover_letter }}</small><br>
+
+        <!-- Visual Status -->
+        <small>
+            <strong>Status:</strong>
+            {% if application.status == 'Approved' %}
+                <span class="badge badge-success">{{ application.status }}</span>
+            {% elif application.status == 'Rejected' %}
+                <span class="badge badge-danger">{{ application.status }}</span>
+            {% else %}
+                <span class="badge badge-secondary">{{ application.status }}</span>
+            {% endif %}
+        </small>
+
+        {% if application.status == 'Pending' %}
+        <form method="post" class="mt-2 d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="app_id" value="{{ application.id }}">
+            <button name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+            <button name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+        </form>
+        {% endif %}
+    </li>
+    {% empty %}
+    <li class="list-group-item">No applications found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'jobportal/base.html' %}
+{% block content %}
+<h2>Employer Dashboard</h2>
+<a href="{% url 'post_job' %}" class="btn btn-success">Post a Job</a>
+<a href="{% url 'my_jobs' %}" class="btn btn-info">My Jobs</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'jobportal/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Apply for {{ job.title }}</h2>
+<form method="post" enctype="multipart/form-data" class="mt-3">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Submit Application</button>
+</form>
+{% endblock %}

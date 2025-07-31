@@ -1,0 +1,23 @@
+{% extends 'jobportal/base.html' %}
+{% block content %}
+<h2>Available Jobs</h2>
+<form method="get" class="form-inline mb-3">
+    <input type="text" name="q" class="form-control mr-2" placeholder="Search by title, company or location">
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+<div class="row">
+    {% for job in jobs %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ job.title }}</h5>
+                <p class="card-text">{{ job.company_name }} - {{ job.location }}</p>
+                <a href="{% url 'job_detail' job.pk %}" class="btn btn-info btn-sm">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No jobs found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

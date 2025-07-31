@@ -1,0 +1,34 @@
+{% extends 'jobportal/base.html' %}
+{% block content %}
+<h2>My Applications</h2>
+
+<!-- Status Filter -->
+<form method="get" class="form-inline mb-3">
+    <label class="mr-2">Filter by status:</label>
+    <select name="status" class="form-control mr-2">
+        <option value="">All</option>
+        <option value="Pending" {% if selected_status == 'Pending' %}selected{% endif %}>Pending</option>
+        <option value="Approved" {% if selected_status == 'Approved' %}selected{% endif %}>Approved</option>
+        <option value="Rejected" {% if selected_status == 'Rejected' %}selected{% endif %}>Rejected</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<ul class="list-group">
+    {% for application in applications %}
+    <li class="list-group-item">
+        <strong>Job:</strong> {{ application.job.title }}<br>
+        <strong>Status:</strong> 
+        {% if application.status == 'Approved' %}
+            <span class="badge badge-success">{{ application.status }}</span>
+        {% elif application.status == 'Rejected' %}
+            <span class="badge badge-danger">{{ application.status }}</span>
+        {% else %}
+            <span class="badge badge-secondary">{{ application.status }}</span>
+        {% endif %}
+    </li>
+    {% empty %}
+    <li class="list-group-item">You have not applied to any jobs.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
